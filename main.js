@@ -3,10 +3,13 @@ function combos() {
     var combos = [];
     cards.forEach(function callback(card_1, index) {
         cards.slice(0, index).forEach(function (card_2) {
-            combos.push(card_2 + cards[index]);
+            const leftCard = card_2
+            const rightCard = cards[index]
+            const isSuited = false
+            combos.push([leftCard, rightCard, isSuited]);
         });
         cards.slice(index).forEach(function (card_2) {
-            combos.push(cards[index] + card_2);
+            combos.push([cards[index], card_2, true]);
         });
     });
     return combos;

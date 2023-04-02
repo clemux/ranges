@@ -3,7 +3,9 @@ import QtQuick
 Item {
     id: combo
 
-    property alias comboCards: comboText.text
+    property string leftCard
+    property string rightCard
+    property bool isSuited
     property alias comboColor: rectangle.color
     property bool selected: false
 
@@ -19,6 +21,7 @@ Item {
         Text {
             id: comboText
             padding: 10
+            text: leftCard + rightCard + (leftCard === rightCard ? "" : (isSuited ? "s" : "o"))
         }
     }
     MouseArea {
