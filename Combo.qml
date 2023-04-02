@@ -23,11 +23,9 @@ Item {
     }
     MouseArea {
         anchors.fill: parent
-        hoverEnabled: true
 
-        onEntered: {
-            selected = !selected;
-
+        onClicked: {
+            selected = !selected
         }
     }
 }
