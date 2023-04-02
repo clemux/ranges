@@ -2,6 +2,7 @@ import QtQuick
 import "main.js" as Functions
 
 Item {
+    property string position
     Grid {
         id: range
         columns: 13
