@@ -13,9 +13,7 @@ Item {
             model: Functions.combos()
 
             Combo {
-                leftCard: {
-                    modelData[0]
-                }
+                leftCard: modelData[0]
                 rightCard: modelData[1]
                 isSuited: modelData[2]
             }

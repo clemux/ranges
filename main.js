@@ -1,6 +1,6 @@
 function combos() {
-    var cards = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"];
-    var combos = [];
+    const cards = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"];
+    let combos = [];
     cards.forEach(function callback(card_1, index) {
         cards.slice(0, index).forEach(function (card_2) {
             const leftCard = card_2
