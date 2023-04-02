@@ -9,22 +9,5 @@ ApplicationWindow {
     visible: true
     width: 1024
 
-    MouseArea {
-        anchors.fill: parent
-
-        Grid {
-            id: grid
-            columns: 13
-            rows: 13
-            spacing: 4
-
-            Repeater {
-                model: Functions.combos()
-
-                Combo {
-                    comboCards: modelData
-                }
-            }
-        }
-    }
+    Range {}
 }
