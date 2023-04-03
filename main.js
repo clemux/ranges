@@ -19,7 +19,7 @@ function combos() {
                 left: left,
                 right: right,
                 isSuited: isSuited,
-                isSelected: false
+                isSelected: left === right && index < 3
             });
         });
     });
@@ -44,5 +44,11 @@ function getCombo(combos, comboString) {
         if (combo.left === parsed.left && combo.right === parsed.right && combo.isSuited === parsed.isSuited) {
             return combo
         }
+    }
+}
+
+function rangeToText(model) {
+    for (let i = 0; i < model.count; i++) {
+        console.log(model.get(i).left)
     }
 }

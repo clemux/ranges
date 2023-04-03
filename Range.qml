@@ -6,10 +6,9 @@ Item {
     property var combos: Functions.combos()
     property string position
 
-    function getComboIndex(s) {
-        return index;
-    }
     function selectCombo(s) {
+        for (let i = 0; i < listModel.count; i++)
+            listModel.get(i).isSelected = false
         let combo = Functions.getCombo(listModel, s);
         combo.isSelected = true
     }
@@ -17,6 +16,18 @@ Item {
         let split = s.split(',');
         split.forEach(c => selectCombo(c.trim()));
     }
+
+    function toText() {
+        let s = ""
+        for (let i = 0; i < listModel.count; i++) {
+            const combo = listModel.get(i)
+            if (combo.isSelected) {
+                s += combo.left + combo.right + ", "
+            }
+        }
+        return s
+    }
+
 
     ListModel {
         id: listModel
@@ -32,19 +43,15 @@ Item {
         }
     }
     Component {
-        id: delegate
+        id: comboDelegate
         Combo {
-            isSelected: model.isSelected
-            isSuited: model.isSuited
-            leftCard: model.left
-            rightCard: model.right
         }
     }
     GridView {
         id: range
         cellHeight: 40
         cellWidth: 40
-        delegate: delegate
+        delegate: comboDelegate
         height: 40 * 13
         model: listModel
         width: 40 * 13
