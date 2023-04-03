@@ -7,11 +7,23 @@ Item {
     height: 40
     width: 40
 
+    function setAction(action) {
+        model.action = action
+    }
+
     Rectangle {
         id: rectangle
         anchors.fill: parent
         border.color: "white"
-        color: model.isSelected ? "green" : "lightyellow"
+        color: {
+            if (model.action === "rfi")
+                return "green"
+            else if (model.action === "call")
+                return "orange"
+            else if (model.action === "3bet")
+                return "red"
+            else return  "lightyellow"
+        }
 
         Text {
             id: comboText
@@ -23,7 +35,10 @@ Item {
         anchors.fill: parent
 
         onClicked: {
-            model.isSelected = !model.isSelected
+            let actionList = parent.parent.parent.parent.parent.parent.actionList
+            let action = actionList.currentItem.currentAction
+            if (model.action === action) model.action = "fold"
+            else model.action = action
         }
     }
 }

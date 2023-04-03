@@ -29,6 +29,8 @@ ApplicationWindow {
             }
         }
         RowLayout {
+            property alias actionList: actionList
+
             Layout.alignment: Qt.AlignTop
 
             StackLayout {
@@ -45,28 +47,54 @@ ApplicationWindow {
                     }
                 }
             }
-            TextField {
-                id: rangeText
-                text: rangeRepeater.itemAt(stack.currentIndex).toText()
+            ColumnLayout {
+                spacing: 20
 
-                onAccepted: {
-                    let range = rangeRepeater.itemAt(stack.currentIndex);
-                    range.clearCombos();
-                    range.selectCombos(rangeText.text);
+                TextField {
+                    id: rangeText
+                    text: rangeRepeater.itemAt(stack.currentIndex).toText()
+
+                    onAccepted: {
+                        console.log(actionBox.value);
+                        let range = rangeRepeater.itemAt(stack.currentIndex);
+                        range.clearCombos();
+                        range.setActionCombos(rangeText.text, actionBox.value);
+                    }
                 }
-            }
-            ComboBox {
-                model: ["RFI", "Call", "3Bet"]
-            }
-            Text {
-                id: nbCardsText
-                text: getText()
+                Text {
+                    id: nbCardsText
+                    function getText() {
+                        const range = rangeRepeater.itemAt(stack.currentIndex);
+                        const nbCards = range.nbCards();
+                        const percent = (nbCards * 100 / 1326).toFixed(2);
+                        return `${nbCards} (${percent}%)`;
+                    }
 
-                function getText() {
-                    const range = rangeRepeater.itemAt(stack.currentIndex)
-                    const nbCards = range.nbCards()
-                    const percent = (nbCards * 100 / 1326).toFixed(2)
-                    return `${nbCards} (${percent}%)`
+                    text: getText()
+                }
+                ButtonGroup {
+                    id: buttonGroup
+                }
+                ListView {
+                    id: actionList
+                    height: 3 * 60
+                    model: ListModel {
+                        id: actionListModel
+                        ListElement { value: "rfi"; label: "RFI"}
+                        ListElement { value: "call"; label: "Call"}
+                        ListElement { value: "3bet"; label: "3Bet"}
+                    }
+
+                    delegate: RadioDelegate {
+                        property string currentAction: model.value
+                        id: actionDelegate
+                        ButtonGroup.group: buttonGroup
+                        checked: index == 0
+                        text: model.label
+                        onClicked: {
+                            actionList.currentIndex = index
+                        }
+                    }
                 }
             }
         }

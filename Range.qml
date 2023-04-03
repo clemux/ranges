@@ -6,24 +6,24 @@ Item {
     property var combos: Functions.combos()
     property string position
 
-    function selectCombo(s) {
+    function setActionCombo(s, action) {
         let combo = Functions.findCombo(listModel, s);
-        combo.isSelected = true;
+        combo.action = action;
     }
-    function selectCombos(s) {
-        let split = s.split(',');
-        split.forEach(c => selectCombo(c.trim()));
+    function setActionCombos(comboText, action) {
+        let split = comboText.split(',');
+        split.forEach(c => setActionCombo(c.trim(), action));
     }
     function clearCombos() {
         for (let i = 0; i < listModel.count; i++) {
-            listModel.get(i).isSelected = false
+            listModel.get(i).action = "fold"
         }
     }
     function toText() {
         let s = "";
         for (let i = 0; i < listModel.count; i++) {
             const combo = listModel.get(i);
-            if (combo.isSelected) {
+            if (combo.action !== "fold") {
                 s += combo.text + ",";
             }
         }
@@ -34,8 +34,7 @@ Item {
         let n = 0
         for (let i = 0; i < listModel.count; i++) {
             const combo = listModel.get(i)
-            if (combo.isSelected) {
-                console.log(combo.text)
+            if (combo.action !== "fold") {
                 n += combo.nbCards
             }
         }
@@ -52,7 +51,7 @@ Item {
                     left: combo.left,
                     right: combo.right,
                     isSuited: combo.isSuited,
-                    isSelected: combo.isSelected,
+                    action: combo.action,
                     nbCards: combo.nbCards
                 })
             }

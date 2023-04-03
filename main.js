@@ -1,9 +1,9 @@
 class Combo {
-    constructor(left, right, isSuited, isSelected) {
+    constructor(left, right, isSuited, action) {
         this.left = left
         this.right = right
         this.isSuited = isSuited
-        this.isSelected = isSelected
+        this.action = action
         this.isPair = this.left === this.right
         this.nbCards = this.getNbCards()
     }
@@ -27,7 +27,7 @@ function combos() {
                 card_2,
                 cards[index],
                 false,
-                false
+                "fold"
         )
             combos.push(combo)
         });
@@ -39,7 +39,7 @@ function combos() {
                 left,
                 right,
                 isSuited,
-                left === right && index < 3
+                 left === right && index < 3 ? "rfi" : "fold"
             )
             combos.push(combo)
         });
