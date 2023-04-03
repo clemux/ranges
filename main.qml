@@ -28,6 +28,7 @@ ApplicationWindow {
             Layout.columnSpan: 3
             Layout.fillWidth: true
             Layout.row: 0
+            currentIndex: 0
 
             Repeater {
                 model: versuses
@@ -53,13 +54,11 @@ ApplicationWindow {
                 height: positionsModel.count * 40
 
                 delegate: Button {
-                    text: model.text
                     highlighted: positionBar.currentIndex === index
+                    text: model.text
 
                     onClicked: {
-                        console.log(model.text, versusBar.currentIndex);
                         positionBar.currentIndex = index;
-                        console.log(rangeListModel.currentIndex)
                     }
                 }
                 model: ListModel {
@@ -81,7 +80,7 @@ ApplicationWindow {
             Layout.preferredWidth: 40 * 13
             Layout.row: 1
             Layout.rowSpan: 4
-            currentIndex: positionBar.currentIndex + versusBar.currentIndex*versuses.length
+            currentIndex: positionBar.currentIndex + versusBar.currentIndex * versuses.length
 
             Repeater {
                 id: rangeRepeater
@@ -116,14 +115,18 @@ ApplicationWindow {
             onAccepted: {
                 let range = rangeRepeater.itemAt(stack.currentIndex);
                 range.clearCombos();
-                console.log(actionButtons.actionList.currentItem.currentAction);
                 range.setActionCombos(rangeText.text, actionButtons.currentAction);
             }
+
         }
         Text {
             id: nbCardsText
             function getText() {
+                console.log(stack.currentIndex)
                 const range = rangeRepeater.itemAt(stack.currentIndex);
+                if (range === null) {
+                    return ""
+                }
                 const nbCards = range.nbCards();
                 const percent = (nbCards * 100 / 1326).toFixed(2);
                 return `${nbCards} cards (${percent}%)`;
@@ -132,7 +135,7 @@ ApplicationWindow {
             Layout.column: 2
             Layout.fillWidth: true
             Layout.row: 2
-            text: getText()
+            text: nbCardsText.getText()
         }
         ActionButtons {
             id: actionButtons
