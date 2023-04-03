@@ -16,7 +16,7 @@ Item {
         Text {
             id: comboText
             padding: 10
-            text: model.left + model.right + (model.left === model.right ? "" : (isSuited ? "s" : "o"))
+            text: model.text
         }
     }
     MouseArea {

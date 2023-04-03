@@ -8,19 +8,23 @@ Item {
 
     function selectCombo(s) {
         let combo = Functions.findCombo(listModel, s);
-        console.log(combo);
         combo.isSelected = true;
     }
     function selectCombos(s) {
         let split = s.split(',');
         split.forEach(c => selectCombo(c.trim()));
     }
+    function clearCombos() {
+        for (let i = 0; i < listModel.count; i++) {
+            listModel.get(i).isSelected = false
+        }
+    }
     function toText() {
         let s = "";
         for (let i = 0; i < listModel.count; i++) {
             const combo = listModel.get(i);
             if (combo.isSelected) {
-                s += combo.left + combo.right + ",";
+                s += combo.text + ",";
             }
         }
         return s.replace(/,+$/, '');
@@ -31,11 +35,12 @@ Item {
         Component.onCompleted: {
             for (const combo of combos) {
                 listModel.append({
-                        "left": combo.left,
-                        "right": combo.right,
-                        "isSuited": combo.isSuited,
-                        "isSelected": combo.isSelected
-                    });
+                    text: combo.toString(),
+                    left: combo.left,
+                    right: combo.right,
+                    isSuited: combo.isSuited,
+                    isSelected: combo.isSelected
+                })
             }
         }
     }

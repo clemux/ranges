@@ -52,7 +52,9 @@ ApplicationWindow {
                 text: "Select"
 
                 onClicked: {
-                    rangeRepeater.itemAt(stack.currentIndex).selectCombos(rangeText.text)
+                    let range = rangeRepeater.itemAt(stack.currentIndex)
+                    range.clearCombos()
+                    range.selectCombos(rangeText.text);
                 }
             }
         }

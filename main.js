@@ -1,28 +1,39 @@
-
+class Combo {
+    constructor(left, right, isSuited, isSelected) {
+        this.left = left
+        this.right = right
+        this.isSuited = isSuited
+        this.isSelected = isSelected
+    }
+    toString() {
+        return this.left + this.right + (this.left === this.right ? "" : this.isSuited ? "s" : "o")
+    }
+}
 
 function combos() {
     const cards = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"];
     let combos = [];
     cards.forEach(function callback(card_1, index) {
         cards.slice(0, index).forEach(function (card_2) {
-            const combo = {
-                left: card_2,
-                right: cards[index],
-                isSuited: false,
-                isSelected: false
-            }
+            const combo = new Combo (
+                card_2,
+                cards[index],
+                false,
+                false
+        )
             combos.push(combo)
         });
         cards.slice(index).forEach(function (card_2) {
             const left = cards[index]
             const right = card_2
             const isSuited = (left !== right)
-            combos.push({
-                left: left,
-                right: right,
-                isSuited: isSuited,
-                isSelected: left === right && index < 3
-            });
+            var combo = new Combo (
+                left,
+                right,
+                isSuited,
+                left === right && index < 3
+            )
+            combos.push(combo)
         });
     });
     return combos;
