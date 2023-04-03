@@ -29,8 +29,11 @@ ApplicationWindow {
             }
         }
         RowLayout {
+            Layout.alignment: Qt.AlignTop
+
             StackLayout {
                 id: stack
+                Layout.alignment: Qt.AlignLeft
                 currentIndex: bar.currentIndex
 
                 Repeater {
@@ -44,17 +47,26 @@ ApplicationWindow {
             }
             TextField {
                 id: rangeText
-                Layout.alignment: Qt.AlignTop
-                text: rangeRepeater.itemAt(stack.currentIndex).toText();
-            }
-            Button {
-                Layout.alignment: Qt.AlignTop
-                text: "Select"
+                text: rangeRepeater.itemAt(stack.currentIndex).toText()
 
-                onClicked: {
-                    let range = rangeRepeater.itemAt(stack.currentIndex)
-                    range.clearCombos()
+                onAccepted: {
+                    let range = rangeRepeater.itemAt(stack.currentIndex);
+                    range.clearCombos();
                     range.selectCombos(rangeText.text);
+                }
+            }
+            ComboBox {
+                model: ["RFI", "Call", "3Bet"]
+            }
+            Text {
+                id: nbCardsText
+                text: getText()
+
+                function getText() {
+                    const range = rangeRepeater.itemAt(stack.currentIndex)
+                    const nbCards = range.nbCards()
+                    const percent = (nbCards * 100 / 1326).toFixed(2)
+                    return `${nbCards} (${percent}%)`
                 }
             }
         }

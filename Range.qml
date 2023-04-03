@@ -30,6 +30,19 @@ Item {
         return s.replace(/,+$/, '');
     }
 
+    function nbCards() {
+        let n = 0
+        for (let i = 0; i < listModel.count; i++) {
+            const combo = listModel.get(i)
+            if (combo.isSelected) {
+                console.log(combo.text)
+                n += combo.nbCards
+            }
+        }
+        return n
+    }
+
+
     ListModel {
         id: listModel
         Component.onCompleted: {
@@ -39,7 +52,8 @@ Item {
                     left: combo.left,
                     right: combo.right,
                     isSuited: combo.isSuited,
-                    isSelected: combo.isSelected
+                    isSelected: combo.isSelected,
+                    nbCards: combo.nbCards
                 })
             }
         }

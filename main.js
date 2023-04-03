@@ -4,9 +4,17 @@ class Combo {
         this.right = right
         this.isSuited = isSuited
         this.isSelected = isSelected
+        this.isPair = this.left === this.right
+        this.nbCards = this.getNbCards()
     }
     toString() {
-        return this.left + this.right + (this.left === this.right ? "" : this.isSuited ? "s" : "o")
+        return this.left + this.right + (this.isPair ? "" : this.isSuited ? "s" : "o")
+    }
+
+    getNbCards() {
+        if (this.isPair) return 6
+        if (this.isSuited) return 4
+        return 12
     }
 }
 
