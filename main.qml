@@ -40,6 +40,7 @@ ApplicationWindow {
             Layout.rowSpan: 4
             Layout.column: 0
             Layout.fillWidth: true
+            Layout.preferredWidth: 40*13
             currentIndex: bar.currentIndex
 
             Repeater {
@@ -54,8 +55,10 @@ ApplicationWindow {
         TextField {
             Layout.column: 1
             Layout.row: 1
+            Layout.alignment: Qt.AlignLeft
             id: rangeText
             Layout.fillWidth: true
+            Layout.preferredWidth: parent.width - 40*13
             text: rangeRepeater.itemAt(stack.currentIndex).toText()
 
             onAccepted: {
@@ -67,6 +70,7 @@ ApplicationWindow {
         Text {
             Layout.column: 1
             Layout.row: 2
+            Layout.fillWidth: true
             id: nbCardsText
             function getText() {
                 const range = rangeRepeater.itemAt(stack.currentIndex);
@@ -80,6 +84,7 @@ ApplicationWindow {
         ActionButtons {
             Layout.column: 1
             Layout.row: 3
+            Layout.fillWidth: true
             id: actionButtons
         }
 
