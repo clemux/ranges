@@ -13,12 +13,12 @@ Item {
 
     function selectCombo(s) {
         const index = getComboIndex(s)
-        comboRepeater.itemAt(index).selected = true
+        comboRepeater.itemAt(index).isSelected = true
     }
 
     function selectCombos(s) {
         let split = s.split(',')
-        split.forEach(c => selectCombo(c))
+        split.forEach(c => selectCombo(c.trim()))
     }
 
     Grid {
@@ -35,6 +35,7 @@ Item {
                 leftCard: modelData.left
                 rightCard: modelData.right
                 isSuited: modelData.isSuited
+                isSelected: modelData.isSelected
             }
         }
     }

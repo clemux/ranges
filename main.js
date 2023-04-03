@@ -6,7 +6,8 @@ function combos() {
             const combo = {
                 left: card_2,
                 right: cards[index],
-                isSuited: false
+                isSuited: false,
+                isSelected: false
             }
             combos.push(combo)
         });
@@ -17,27 +18,14 @@ function combos() {
             combos.push({
                 left: left,
                 right: right,
-                isSuited: isSuited
+                isSuited: isSuited,
+                isSelected: false
             });
         });
     });
     return combos;
 }
 
-function selectPairs(start) {
-    const pairs = ["JJ", "QQ", "KK", "AA"]
-    return pairs.slice(pairs.indexOf(start))
-}
-
-function getCombos() {
-    const s = new Set([1]);
-    return s
-}
-
-
-function getId() {
-    return "aks"
-}
 
 function parseCombo(comboString) {
     const split = comboString.split('')

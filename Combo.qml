@@ -6,7 +6,7 @@ Item {
     property string rightCard
     property bool isSuited
     property alias comboColor: rectangle.color
-    property bool selected: false
+    property bool isSelected: false
 
     property string uniqueId
     height: 40
@@ -16,7 +16,7 @@ Item {
         id: rectangle
         anchors.fill: parent
         border.color: "white"
-        color: combo.selected ? "green" : "lightyellow"
+        color: combo.isSelected ? "green" : "lightyellow"
 
         Text {
             id: comboText
@@ -28,7 +28,7 @@ Item {
         anchors.fill: parent
 
         onClicked: {
-            selected = !selected
+            isSelected = !isSelected
         }
     }
 }
