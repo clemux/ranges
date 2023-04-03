@@ -35,7 +35,6 @@ Item {
         anchors.fill: parent
 
         onClicked: {
-            let actionList = parent.parent.parent.parent.parent.parent.actionList
             let action = actionList.currentItem.currentAction
             if (model.action === action) model.action = "fold"
             else model.action = action
