@@ -13,12 +13,23 @@ ApplicationWindow {
     visible: true
     width: 1024
 
-    ColumnLayout {
+    GridLayout {
+        property alias actionList: actionList
+
+        Layout.alignment: Qt.AlignTop
+        Layout.row: 1
         anchors.fill: parent
+        anchors.margins: 0
+        columns: 2
+        rows: 4
+        columnSpacing: 0
+        flow: GridLayout.TopToBottom
 
         TabBar {
             id: bar
             Layout.fillWidth: true
+            Layout.row: 0
+            Layout.alignment: Qt.AlignTop
 
             Repeater {
                 model: positions
@@ -28,72 +39,86 @@ ApplicationWindow {
                 }
             }
         }
-        RowLayout {
-            property alias actionList: actionList
+        StackLayout {
+            id: stack
+            Layout.alignment: Qt.AlignLeft
+            Layout.row: 1
+            Layout.rowSpan: 3
+            Layout.column: 0
+            Layout.fillWidth: true
+            currentIndex: bar.currentIndex
 
-            Layout.alignment: Qt.AlignTop
+            Repeater {
+                id: rangeRepeater
+                model: positions
 
-            StackLayout {
-                id: stack
-                Layout.alignment: Qt.AlignLeft
-                currentIndex: bar.currentIndex
-
-                Repeater {
-                    id: rangeRepeater
-                    model: positions
-
-                    Range {
-                        position: modelData
-                    }
+                Range {
+                    position: modelData
                 }
             }
-            ColumnLayout {
-                spacing: 20
+        }
+        TextField {
+            id: rangeText
+            Layout.row: 1
+            Layout.column: 1
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignLeft
+            text: rangeRepeater.itemAt(stack.currentIndex).toText()
 
-                TextField {
-                    id: rangeText
-                    text: rangeRepeater.itemAt(stack.currentIndex).toText()
+            onAccepted: {
+                let range = rangeRepeater.itemAt(stack.currentIndex);
+                range.clearCombos();
+                range.setActionCombos(rangeText.text, actionBox.value);
+            }
+        }
+        Text {
+            Layout.column: 1
+            Layout.row: 2
+            id: nbCardsText
+            function getText() {
+                const range = rangeRepeater.itemAt(stack.currentIndex);
+                const nbCards = range.nbCards();
+                const percent = (nbCards * 100 / 1326).toFixed(2);
+                return `${nbCards} cards (${percent}%)`;
+            }
 
-                    onAccepted: {
-                        let range = rangeRepeater.itemAt(stack.currentIndex);
-                        range.clearCombos();
-                        range.setActionCombos(rangeText.text, actionBox.value);
-                    }
+            text: getText()
+        }
+        ButtonGroup {
+            id: buttonGroup
+        }
+        ListView {
+            Layout.row: 3
+            Layout.column: 1
+            id: actionList
+            height: 3 * 60
+
+            delegate: RadioDelegate {
+                id: actionDelegate
+
+                property string currentAction: model.value
+
+                ButtonGroup.group: buttonGroup
+                checked: index == 0
+                text: model.label
+
+                onClicked: {
+                    actionList.currentIndex = index;
                 }
-                Text {
-                    id: nbCardsText
-                    function getText() {
-                        const range = rangeRepeater.itemAt(stack.currentIndex);
-                        const nbCards = range.nbCards();
-                        const percent = (nbCards * 100 / 1326).toFixed(2);
-                        return `${nbCards} (${percent}%)`;
-                    }
-
-                    text: getText()
+            }
+            model: ListModel {
+                id: actionListModel
+                ListElement {
+                    label: "RFI"
+                    value: "rfi"
                 }
-                ButtonGroup {
-                    id: buttonGroup
+                ListElement {
+                    label: "Call"
+                    value: "call"
                 }
-                ListView {
-                    id: actionList
-                    height: 3 * 60
-                    model: ListModel {
-                        id: actionListModel
-                        ListElement { value: "rfi"; label: "RFI"}
-                        ListElement { value: "call"; label: "Call"}
-                        ListElement { value: "3bet"; label: "3Bet"}
-                    }
-
-                    delegate: RadioDelegate {
-                        property string currentAction: model.value
-                        id: actionDelegate
-                        ButtonGroup.group: buttonGroup
-                        checked: index == 0
-                        text: model.label
-                        onClicked: {
-                            actionList.currentIndex = index
-                        }
-                    }
+                ListElement {
+                    label: "3Bet"
+                    value: "3bet"
                 }
             }
         }
