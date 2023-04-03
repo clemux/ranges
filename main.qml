@@ -14,17 +14,13 @@ ApplicationWindow {
     width: 1024
 
     GridLayout {
-        property alias actionList: actionList
-
         Layout.alignment: Qt.AlignTop
-        Layout.row: 1
         anchors.fill: parent
         anchors.margins: 0
         columns: 2
         rows: 4
         columnSpacing: 0
         flow: GridLayout.TopToBottom
-
         TabBar {
             id: bar
             Layout.fillWidth: true
@@ -84,43 +80,11 @@ ApplicationWindow {
 
             text: getText()
         }
-        ButtonGroup {
-            id: buttonGroup
-        }
-        ListView {
-            Layout.row: 3
+        ActionButtons {
+            id: actionButtons
             Layout.column: 1
-            id: actionList
-            height: 3 * 60
-
-            delegate: RadioDelegate {
-                id: actionDelegate
-
-                property string currentAction: model.value
-
-                ButtonGroup.group: buttonGroup
-                checked: index == 0
-                text: model.label
-
-                onClicked: {
-                    actionList.currentIndex = index;
-                }
-            }
-            model: ListModel {
-                id: actionListModel
-                ListElement {
-                    label: "RFI"
-                    value: "rfi"
-                }
-                ListElement {
-                    label: "Call"
-                    value: "call"
-                }
-                ListElement {
-                    label: "3Bet"
-                    value: "3bet"
-                }
-            }
+            Layout.row: 3
         }
+
     }
 }
