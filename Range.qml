@@ -7,27 +7,24 @@ Item {
     property string position
 
     function selectCombo(s) {
-        for (let i = 0; i < listModel.count; i++)
-            listModel.get(i).isSelected = false
-        let combo = Functions.getCombo(listModel, s);
-        combo.isSelected = true
+        let combo = Functions.findCombo(listModel, s);
+        console.log(combo);
+        combo.isSelected = true;
     }
     function selectCombos(s) {
         let split = s.split(',');
         split.forEach(c => selectCombo(c.trim()));
     }
-
     function toText() {
-        let s = ""
+        let s = "";
         for (let i = 0; i < listModel.count; i++) {
-            const combo = listModel.get(i)
+            const combo = listModel.get(i);
             if (combo.isSelected) {
-                s += combo.left + combo.right + ", "
+                s += combo.left + combo.right + ",";
             }
         }
-        return s
+        return s.replace(/,+$/, '');
     }
-
 
     ListModel {
         id: listModel

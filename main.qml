@@ -45,7 +45,7 @@ ApplicationWindow {
             TextField {
                 id: rangeText
                 Layout.alignment: Qt.AlignTop
-                text: "JJ"
+                text: rangeRepeater.itemAt(stack.currentIndex).toText();
             }
             Button {
                 Layout.alignment: Qt.AlignTop
@@ -53,14 +53,6 @@ ApplicationWindow {
 
                 onClicked: {
                     rangeRepeater.itemAt(stack.currentIndex).selectCombos(rangeText.text)
-                }
-            }
-            Button {
-                text: "Update"
-                Layout.alignment: Qt.AlignTop
-
-                onClicked: {
-                    rangeText.text = rangeRepeater.itemAt(stack.currentIndex).toText();
                 }
             }
         }

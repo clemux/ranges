@@ -1,3 +1,5 @@
+
+
 function combos() {
     const cards = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"];
     let combos = [];
@@ -37,18 +39,12 @@ function parseCombo(comboString) {
 
 }
 
-function getCombo(combos, comboString) {
+function findCombo(combos, comboString) {
     const parsed = parseCombo(comboString)
     for (let i = 0; i < combos.count; i++) {
         const combo = combos.get(i)
         if (combo.left === parsed.left && combo.right === parsed.right && combo.isSuited === parsed.isSuited) {
             return combo
         }
-    }
-}
-
-function rangeToText(model) {
-    for (let i = 0; i < model.count; i++) {
-        console.log(model.get(i).left)
     }
 }
