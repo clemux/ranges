@@ -6,8 +6,8 @@ import "main.js" as Functions
 
 ApplicationWindow {
     property list<string> positions: ["LJ", "HJ", "CO", "BTN", "SB", "BB"]
+    property list<string> versuses: ["LJ", "HJ", "CO", "BTN", "SB", "BB"]
 
-    Material.theme: Material.Light
     height: 768
     title: "Ranges"
     visible: true
@@ -64,7 +64,8 @@ ApplicationWindow {
             onAccepted: {
                 let range = rangeRepeater.itemAt(stack.currentIndex);
                 range.clearCombos();
-                range.setActionCombos(rangeText.text, actionBox.value);
+                console.log(actionButtons.actionList.currentItem.currentAction)
+                range.setActionCombos(rangeText.text, actionButtons.currentAction);
             }
         }
         Text {
@@ -86,6 +87,7 @@ ApplicationWindow {
             Layout.row: 3
             Layout.fillWidth: true
             id: actionButtons
+            property string currentAction: actionList.currentItem.currentAction
         }
 
     }
