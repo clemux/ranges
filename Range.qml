@@ -1,8 +1,26 @@
 import QtQuick
+import QtQuick.Controls
 import "main.js" as Functions
 
 Item {
     property string position
+    property var combos: Functions.combos()
+
+    function getComboIndex(s) {
+        let index = Functions.getCombo(combos, s)
+        return index
+    }
+
+    function selectCombo(s) {
+        const index = getComboIndex(s)
+        comboRepeater.itemAt(index).selected = true
+    }
+
+    function selectCombos(s) {
+        let split = s.split(',')
+        split.forEach(c => selectCombo(c))
+    }
+
     Grid {
         id: range
         columns: 13
@@ -10,12 +28,13 @@ Item {
         spacing: 4
 
         Repeater {
-            model: Functions.combos()
+            model: combos
+            id: comboRepeater
 
             Combo {
-                leftCard: modelData[0]
-                rightCard: modelData[1]
-                isSuited: modelData[2]
+                leftCard: modelData.left
+                rightCard: modelData.right
+                isSuited: modelData.isSuited
             }
         }
     }

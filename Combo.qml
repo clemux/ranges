@@ -2,13 +2,13 @@ import QtQuick
 
 Item {
     id: combo
-
     property string leftCard
     property string rightCard
     property bool isSuited
     property alias comboColor: rectangle.color
     property bool selected: false
 
+    property string uniqueId
     height: 40
     width: 40
 
