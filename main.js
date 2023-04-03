@@ -39,8 +39,10 @@ function parseCombo(comboString) {
 
 function getCombo(combos, comboString) {
     const parsed = parseCombo(comboString)
-
-    return combos.findIndex((combo) =>
-        (combo.left === parsed.left && combo.right === parsed.right && combo.isSuited === parsed.isSuited)
-    )
+    for (let i = 0; i < combos.count; i++) {
+        const combo = combos.get(i)
+        if (combo.left === parsed.left && combo.right === parsed.right && combo.isSuited === parsed.isSuited) {
+            return combo
+        }
+    }
 }

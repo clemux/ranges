@@ -49,7 +49,7 @@ ApplicationWindow {
             }
             Button {
                 Layout.alignment: Qt.AlignTop
-                text: "test"
+                text: "Test"
 
                 onClicked: {
                     rangeRepeater.itemAt(stack.currentIndex).selectCombos(rangeText.text)
