@@ -10,7 +10,7 @@ Item {
         }
         ListView {
             id: actionList
-            height: 3 * 60
+            height: actionListModel.count * 40
 
             delegate: RadioDelegate {
                 id: actionDelegate

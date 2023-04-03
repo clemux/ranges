@@ -20,7 +20,6 @@ ApplicationWindow {
         columns: 2
         rows: 4
         columnSpacing: 0
-        flow: GridLayout.TopToBottom
         TabBar {
             id: bar
             Layout.fillWidth: true
@@ -37,9 +36,8 @@ ApplicationWindow {
         }
         StackLayout {
             id: stack
-            Layout.alignment: Qt.AlignLeft
             Layout.row: 1
-            Layout.rowSpan: 3
+            Layout.rowSpan: 4
             Layout.column: 0
             Layout.fillWidth: true
             currentIndex: bar.currentIndex
@@ -54,11 +52,10 @@ ApplicationWindow {
             }
         }
         TextField {
-            id: rangeText
-            Layout.row: 1
             Layout.column: 1
+            Layout.row: 1
+            id: rangeText
             Layout.fillWidth: true
-            Layout.alignment: Qt.AlignLeft
             text: rangeRepeater.itemAt(stack.currentIndex).toText()
 
             onAccepted: {
@@ -81,9 +78,9 @@ ApplicationWindow {
             text: getText()
         }
         ActionButtons {
-            id: actionButtons
             Layout.column: 1
             Layout.row: 3
+            id: actionButtons
         }
 
     }
