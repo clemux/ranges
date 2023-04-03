@@ -55,7 +55,6 @@ ApplicationWindow {
                     text: rangeRepeater.itemAt(stack.currentIndex).toText()
 
                     onAccepted: {
-                        console.log(actionBox.value);
                         let range = rangeRepeater.itemAt(stack.currentIndex);
                         range.clearCombos();
                         range.setActionCombos(rangeText.text, actionBox.value);
