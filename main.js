@@ -39,7 +39,7 @@ function combos() {
                 left,
                 right,
                 isSuited,
-                 left === right && index < 1 ? "rfi" : "fold"
+                 left === right && index < 0 ? "rfi" : "fold"
             )
             combos.push(combo)
         });

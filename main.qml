@@ -17,61 +17,110 @@ ApplicationWindow {
         Layout.alignment: Qt.AlignTop
         anchors.fill: parent
         anchors.margins: 0
-        columns: 2
-        rows: 4
-        columnSpacing: 0
+        columnSpacing: 10
+        columns: 3
+        rows: 5
+
         TabBar {
-            id: bar
+            id: versusBar
+            Layout.alignment: Qt.AlignTop
+            Layout.column: 1
+            Layout.columnSpan: 3
             Layout.fillWidth: true
             Layout.row: 0
-            Layout.alignment: Qt.AlignTop
 
             Repeater {
-                model: positions
+                model: versuses
 
                 TabButton {
                     text: modelData
                 }
             }
         }
-        StackLayout {
-            id: stack
-            Layout.row: 1
-            Layout.rowSpan: 4
+        Item {
+            id: positionBar
+
+            property int currentIndex
+
+            Layout.alignment: Qt.AlignLeft
             Layout.column: 0
             Layout.fillWidth: true
-            Layout.preferredWidth: 40*13
-            currentIndex: bar.currentIndex
+            Layout.preferredWidth: 100
+            Layout.row: 2
+
+            ListView {
+                id: positionsView
+                height: positionsModel.count * 40
+
+                delegate: Button {
+                    text: model.text
+                    highlighted: positionBar.currentIndex === index
+
+                    onClicked: {
+                        console.log(model.text, versusBar.currentIndex);
+                        positionBar.currentIndex = index;
+                        console.log(rangeListModel.currentIndex)
+                    }
+                }
+                model: ListModel {
+                    id: positionsModel
+                    Component.onCompleted: {
+                        for (const pos of positions) {
+                            append({
+                                    "text": pos
+                                });
+                        }
+                    }
+                }
+            }
+        }
+        StackLayout {
+            id: stack
+            Layout.column: 1
+            Layout.fillWidth: true
+            Layout.preferredWidth: 40 * 13
+            Layout.row: 1
+            Layout.rowSpan: 4
+            currentIndex: positionBar.currentIndex + versusBar.currentIndex*versuses.length
 
             Repeater {
                 id: rangeRepeater
-                model: positions
-
-                Range {
-                    position: modelData
+                delegate: Range {
+                    position: model.position
+                    versus: model.versus
+                }
+                model: ListModel {
+                    id: rangeListModel
+                    Component.onCompleted: {
+                        for (const pos of positions) {
+                            for (const versus of versuses) {
+                                append({
+                                        "position": pos,
+                                        "versus": versus
+                                    });
+                            }
+                        }
+                    }
                 }
             }
         }
         TextField {
-            Layout.column: 1
-            Layout.row: 1
-            Layout.alignment: Qt.AlignLeft
             id: rangeText
+            Layout.alignment: Qt.AlignLeft
+            Layout.column: 2
             Layout.fillWidth: true
-            Layout.preferredWidth: parent.width - 40*13
+            Layout.preferredWidth: parent.width - 40 * 13 - 100 - 10
+            Layout.row: 1
             text: rangeRepeater.itemAt(stack.currentIndex).toText()
 
             onAccepted: {
                 let range = rangeRepeater.itemAt(stack.currentIndex);
                 range.clearCombos();
-                console.log(actionButtons.actionList.currentItem.currentAction)
+                console.log(actionButtons.actionList.currentItem.currentAction);
                 range.setActionCombos(rangeText.text, actionButtons.currentAction);
             }
         }
         Text {
-            Layout.column: 1
-            Layout.row: 2
-            Layout.fillWidth: true
             id: nbCardsText
             function getText() {
                 const range = rangeRepeater.itemAt(stack.currentIndex);
@@ -80,15 +129,19 @@ ApplicationWindow {
                 return `${nbCards} cards (${percent}%)`;
             }
 
+            Layout.column: 2
+            Layout.fillWidth: true
+            Layout.row: 2
             text: getText()
         }
         ActionButtons {
-            Layout.column: 1
-            Layout.row: 3
-            Layout.fillWidth: true
             id: actionButtons
-            property string currentAction: actionList.currentItem.currentAction
-        }
 
+            property string currentAction: actionList.currentItem.currentAction
+
+            Layout.column: 2
+            Layout.fillWidth: true
+            Layout.row: 3
+        }
     }
 }

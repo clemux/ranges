@@ -3,8 +3,10 @@ import QtQuick.Controls
 import "main.js" as Functions
 
 Item {
+    visible: false
     property var combos: Functions.combos()
     property string position
+    property string versus
 
     function setActionCombo(s, action) {
         let combo = Functions.findCombo(listModel, s);
@@ -70,5 +72,11 @@ Item {
         height: 40 * 13
         model: listModel
         width: 40 * 13
+    }
+    Component.onCompleted: {
+        console.log(`Range ${position} ${versus}`)
+        if (position === versus) {
+            range.visible = false
+        }
     }
 }
