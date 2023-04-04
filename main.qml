@@ -38,40 +38,13 @@ ApplicationWindow {
                 }
             }
         }
-        Item {
+        PositionBar {
             id: positionBar
-
-            property int currentIndex
-
             Layout.alignment: Qt.AlignLeft
             Layout.column: 0
             Layout.fillWidth: true
             Layout.preferredWidth: 100
             Layout.row: 2
-
-            ListView {
-                id: positionsView
-                height: positionsModel.count * 40
-
-                delegate: Button {
-                    highlighted: positionBar.currentIndex === index
-                    text: model.text
-
-                    onClicked: {
-                        positionBar.currentIndex = index;
-                    }
-                }
-                model: ListModel {
-                    id: positionsModel
-                    Component.onCompleted: {
-                        for (const pos of positions) {
-                            append({
-                                    "text": pos
-                                });
-                        }
-                    }
-                }
-            }
         }
         StackLayout {
             id: stack
@@ -90,6 +63,7 @@ ApplicationWindow {
                 }
                 model: ListModel {
                     id: rangeListModel
+
                     Component.onCompleted: {
                         for (const pos of positions) {
                             for (const versus of versuses) {
@@ -99,6 +73,7 @@ ApplicationWindow {
                                     });
                             }
                         }
+                        console.log(stack.currentIndex)
                     }
                 }
             }
@@ -122,11 +97,9 @@ ApplicationWindow {
         Text {
             id: nbCardsText
             function getText() {
-                console.log(stack.currentIndex)
                 const range = rangeRepeater.itemAt(stack.currentIndex);
-                if (range === null) {
-                    return ""
-                }
+                console.log(stack.currentIndex)
+                console.log(range)
                 const nbCards = range.nbCards();
                 const percent = (nbCards * 100 / 1326).toFixed(2);
                 return `${nbCards} cards (${percent}%)`;
