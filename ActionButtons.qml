@@ -18,7 +18,7 @@ Item {
                 property string currentAction: model.value
 
                 ButtonGroup.group: buttonGroup
-                checked: index == 0
+                checked: index === 0
                 text: model.label
 
                 onClicked: {

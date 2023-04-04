@@ -5,8 +5,8 @@ import QtQuick.Layouts
 import "main.js" as Functions
 
 ApplicationWindow {
-    property list<string> positions: ["LJ", "HJ", "CO", "BTN", "SB", "BB"]
-    property list<string> versuses: ["LJ", "HJ", "CO", "BTN", "SB", "BB"]
+    property variant positions: ["LJ", "HJ", "CO", "BTN", "SB", "BB"]
+    property variant versuses: ["LJ", "HJ", "CO", "BTN", "SB", "BB"]
 
     height: 768
     title: "Ranges"
@@ -28,7 +28,6 @@ ApplicationWindow {
             Layout.columnSpan: 3
             Layout.fillWidth: true
             Layout.row: 0
-            currentIndex: 0
 
             Repeater {
                 model: versuses
@@ -57,25 +56,8 @@ ApplicationWindow {
 
             Repeater {
                 id: rangeRepeater
-                delegate: Range {
-                    position: model.position
-                    versus: model.versus
-                }
-                model: ListModel {
-                    id: rangeListModel
-
-                    Component.onCompleted: {
-                        for (const pos of positions) {
-                            for (const versus of versuses) {
-                                append({
-                                        "position": pos,
-                                        "versus": versus
-                                    });
-                            }
-                        }
-                        console.log(stack.currentIndex)
-                    }
-                }
+                model: 36
+                Range {}
             }
         }
         TextField {

@@ -6,8 +6,6 @@ Item {
 
     property int currentIndex: 0
 
-
-
     ListView {
         id: positionsView
         height: positionsModel.count * 40
