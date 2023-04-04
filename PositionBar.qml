@@ -1,10 +1,12 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Controls.Material
 
 Item {
     id: positionBar
 
     property int currentIndex: 0
+
 
     ListView {
         id: positionsView
@@ -13,6 +15,7 @@ Item {
         delegate: Button {
             highlighted: positionBar.currentIndex === index
             text: model.text
+            width: 100
 
             onClicked: {
                 positionBar.currentIndex = index;

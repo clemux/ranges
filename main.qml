@@ -43,7 +43,7 @@ ApplicationWindow {
             Layout.column: 0
             Layout.fillWidth: true
             Layout.preferredWidth: 100
-            Layout.row: 2
+            Layout.row: 1
         }
         StackLayout {
             id: stack
@@ -80,8 +80,6 @@ ApplicationWindow {
             id: nbCardsText
             function getText() {
                 const range = rangeRepeater.itemAt(stack.currentIndex);
-                console.log(stack.currentIndex)
-                console.log(range)
                 const nbCards = range.nbCards();
                 const percent = (nbCards * 100 / 1326).toFixed(2);
                 return `${nbCards} cards (${percent}%)`;
